@@ -1,0 +1,76 @@
+@model BookClass.BookClass
+
+@{
+    ViewData["Title"] = "Buch hinzufügen";
+}
+
+<div class="page-header">
+    <h1><i class="bi bi-plus-circle me-2"></i>Buch hinzufügen</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card p-4">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="BookName" class="form-label">Titel</label>
+                        <input asp-for="BookName" class="form-control" placeholder="Buchtitel" />
+                        <span asp-validation-for="BookName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="BookAuthor" class="form-label">Autor</label>
+                        <input asp-for="BookAuthor" class="form-control" placeholder="Name des Autors" />
+                        <span asp-validation-for="BookAuthor" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="BookDate" class="form-label">Erscheinungsdatum</label>
+                        <input asp-for="BookDate" class="form-control" type="date" />
+                        <span asp-validation-for="BookDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="BookFileUpload" class="form-label">Buchdatei</label>
+                        <input asp-for="BookFileUpload" type="file" class="form-control" accept=".pdf,.epub,.txt,.doc,.docx,.zip" />
+                        <small class="text-muted">Optional — pdf, epub, txt, doc, zip</small>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="BookImageUpload" class="form-label">Titelbild</label>
+                        <input asp-for="BookImageUpload" type="file" class="form-control" accept="image/*" />
+                        <small class="text-muted">Optional — jpg, png, webp...</small>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Eigentümer</label>
+                        <input type="text" class="form-control" value="@(Context.Session.GetString("UserName"))" readonly />
+                        <small class="text-muted">Wird automatisch Ihrem Konto zugeordnet.</small>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-accent">
+                        <i class="bi bi-check-circle me-1"></i>Erstellen
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Zurück zur Liste
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-5 mt-3 mt-lg-0">
+        <div class="card p-4 bg-light">
+            <h6><i class="bi bi-lightbulb me-2 text-warning"></i>Tipps</h6>
+            <ul class="small text-muted mb-0">
+                <li>Die <strong>Buch-ID</strong> wird automatisch als eindeutige GUID (Primärschlüssel) generiert.</li>
+                <li><strong>Buchdatei</strong> und <strong>Titelbild</strong> werden in <code>wwwroot/uploads</code> gespeichert und ihre Pfade in der Datenbank abgelegt.</li>
+                <li><strong>Eigentümer</strong> wird automatisch aus Ihrem angemeldeten Konto übernommen (Fremdschlüssel).</li>
+                <li>Das Buch wird automatisch gelöscht, wenn sein Eigentümer gelöscht wird (Kaskade).</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

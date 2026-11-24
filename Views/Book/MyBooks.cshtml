@@ -1,0 +1,82 @@
+@model IEnumerable<BookClass.BookClass>
+
+@{
+    ViewData["Title"] = "Meine Bücher";
+}
+
+<div class="d-flex justify-content-between align-items-center page-header">
+    <h1><i class="bi bi-journal-bookmark me-2"></i>Meine Bücher</h1>
+    <div>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-collection me-1"></i>Alle Bücher
+        </a>
+        <a asp-action="Create" class="btn btn-accent">
+            <i class="bi bi-plus-circle me-1"></i>Buch hinzufügen
+        </a>
+    </div>
+</div>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>@TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Schließen"></button>
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-center py-5 text-muted">
+        <i class="bi bi-journal-plus" style="font-size: 4rem;"></i>
+        <h3 class="mt-3">Das Regal ist leer</h3>
+        <p>Fügen Sie Ihr erstes Buch hinzu, es erscheint dann hier.</p>
+        <a asp-action="Create" class="btn btn-accent">
+            <i class="bi bi-plus-circle me-1"></i>Mein erstes Buch hinzufügen
+        </a>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(item.BookImage))
+                    {
+                        <img src="@item.BookImage" class="card-img-top book-cover" alt="@item.BookName"
+                             onerror="this.outerHTML='&lt;div class=&quot;book-cover card-img-top&quot;&gt;&lt;i class=&quot;bi bi-book&quot;&gt;&lt;/i&gt;&lt;/div&gt;'" />
+                    }
+                    else
+                    {
+                        <div class="book-cover card-img-top">
+                            <i class="bi bi-book"></i>
+                        </div>
+                    }
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-truncate" title="@item.BookName">@item.BookName</h5>
+                        <p class="card-text text-muted small mb-1">
+                            <i class="bi bi-person me-1"></i>@item.BookAuthor
+                        </p>
+                        <p class="card-text text-muted small">
+                            <i class="bi bi-calendar3 me-1"></i>@item.BookDate.ToString("yyyy-MM-dd")
+                        </p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center pt-2">
+                            <a asp-action="Details" asp-route-bookId="@item.BookId" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-info-circle me-1"></i>Details
+                            </a>
+                            <div class="btn-group btn-group-sm">
+                                <a asp-action="Edit" asp-route-bookId="@item.BookId" class="btn btn-outline-primary" title="Bearbeiten">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-bookId="@item.BookId" class="btn btn-outline-danger" title="Löschen">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

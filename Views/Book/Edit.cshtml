@@ -1,0 +1,83 @@
+@model BookClass.BookClass
+
+@{
+    ViewData["Title"] = "Buch bearbeiten";
+}
+
+<div class="page-header">
+    <h1><i class="bi bi-pencil me-2"></i>Buch bearbeiten</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card p-4">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="BookId" />
+                <input type="hidden" asp-for="BookFile" />
+                <input type="hidden" asp-for="BookImage" />
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Buch-ID</label>
+                        <input asp-for="BookId" class="form-control" readonly />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="BookName" class="form-label">Titel</label>
+                        <input asp-for="BookName" class="form-control" />
+                        <span asp-validation-for="BookName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="BookAuthor" class="form-label">Autor</label>
+                        <input asp-for="BookAuthor" class="form-control" />
+                        <span asp-validation-for="BookAuthor" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="BookDate" class="form-label">Veröffentlichungsdatum</label>
+                        <input asp-for="BookDate" class="form-control" type="date" />
+                        <span asp-validation-for="BookDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Buchdatei ersetzen</label>
+                        <input asp-for="BookFileUpload" type="file" class="form-control" accept=".pdf,.epub,.txt,.doc,.docx,.zip" />
+                        <small class="text-muted">Aktuell: @(string.IsNullOrEmpty(Model.BookFile) ? "keine" : Model.BookFile)</small>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Titelbild ersetzen</label>
+                        <input asp-for="BookImageUpload" type="file" class="form-control" accept="image/*" />
+                        <small class="text-muted">Aktuell: @(string.IsNullOrEmpty(Model.BookImage) ? "keine" : Model.BookImage)</small>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Eigentümer-Benutzer-ID</label>
+                        <input type="text" class="form-control" value="@Model.UserId" readonly />
+                        <small class="text-muted">Fremdschlüssel — wird beim Erstellen des Buchs automatisch gesetzt.</small>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-accent">
+                        <i class="bi bi-check-circle me-1"></i>Speichern
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Zurück zur Liste
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-5 mt-3 mt-lg-0">
+        <div class="card p-4 bg-light">
+            <h6><i class="bi bi-info-circle me-2 text-primary"></i>Bearbeiten</h6>
+            <p class="small text-muted mb-0">
+                Die Buch-ID ist der Primärschlüssel und kann nicht geändert werden.
+                Wählen Sie nur dann eine neue Datei/ein neues Bild, wenn Sie die aktuelle <strong>ersetzen</strong> möchten —
+                die alte Datei wird automatisch von der Festplatte gelöscht.
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,50 @@
+@model AuthViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Anmelden";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card p-4">
+            <h2 class="page-header h4"><i class="bi bi-box-arrow-in-right me-2"></i>Anmelden</h2>
+
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-info"><i class="bi bi-envelope-check me-1"></i>@TempData["Message"]</div>
+            }
+            @if (TempData["DevCode"] != null)
+            {
+                <div class="alert alert-warning mb-0"><strong>DEV-MODUS:</strong> Ihr Aktivierungscode lautet <code class="fw-bold">@TempData["DevCode"]</code></div>
+            }
+
+            <form asp-controller="User" asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">E-Mail</label>
+                    <input asp-for="Email" type="email" class="form-control" placeholder="you@example.com" autofocus />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">Passwort</label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-accent w-100">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>Anmelden
+                </button>
+            </form>
+
+            <p class="small text-muted mt-3 mb-0 text-center">
+                Noch kein Konto? <a asp-controller="User" asp-action="Register">Konto anlegen</a><br />
+                Noch nicht aktiviert? <a asp-controller="User" asp-action="Activate">Konto aktivieren</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

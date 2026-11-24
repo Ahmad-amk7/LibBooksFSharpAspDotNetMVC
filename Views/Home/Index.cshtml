@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Startseite";
+}
+
+<div class="hero text-center mb-5">
+    <h1 class="display-5 fw-bold"><i class="bi bi-book-half me-3"></i>Willkommen bei F# Bibliothek</h1>
+    <p class="lead mb-4">Ein modernes Buchverwaltungssystem, entwickelt mit F# &amp; ASP.NET Core</p>
+    <a asp-controller="Book" asp-action="Index" class="btn btn-accent btn-lg me-2">
+        <i class="bi bi-collection me-1"></i>Bücher durchsuchen
+    </a>
+    <a asp-controller="Book" asp-action="Create" class="btn btn-outline-light btn-lg">
+        <i class="bi bi-plus-circle me-1"></i>Buch hinzufügen
+    </a>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="bi bi-collection text-primary" style="font-size: 2.5rem;"></i>
+                <h5 class="card-title mt-3">Buchkatalog</h5>
+                <p class="card-text text-muted">Verwalten Sie Ihre gesamte Büchersammlung — Bücher hinzufügen, bearbeiten und entfernen.</p>
+                <a asp-controller="Book" asp-action="Index" class="btn btn-outline-primary btn-sm">Zu den Büchern</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="bi bi-person-circle text-success" style="font-size: 2.5rem;"></i>
+                <h5 class="card-title mt-3">Mein Konto</h5>
+                <p class="card-text text-muted">Erstellen Sie ein Konto, melden Sie sich an und verwalten Sie Ihre eigenen Bücher.</p>
+                <a asp-controller="User" asp-action="Login" class="btn btn-outline-success btn-sm">Zur Anmeldung</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="bi bi-code-slash text-warning" style="font-size: 2.5rem;"></i>
+                <h5 class="card-title mt-3">Mit F# entwickelt</h5>
+                <p class="card-text text-muted">Vollständig mit funktionsorientiertem F# auf .NET mit MariaDB entwickelt.</p>
+                <a asp-controller="Home" asp-action="Privacy" class="btn btn-outline-warning btn-sm">Mehr erfahren</a>
+            </div>
+        </div>
+    </div>
+</div>

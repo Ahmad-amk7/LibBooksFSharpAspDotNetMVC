@@ -1,0 +1,78 @@
+@model BookClass.BookClass
+
+@{
+    ViewData["Title"] = "Buchdetails";
+}
+
+<div class="page-header">
+    <h1><i class="bi bi-info-circle me-2"></i>Buchdetails</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            @if (!string.IsNullOrEmpty(Model.BookImage))
+            {
+                <img src="@Model.BookImage" class="card-img-top book-cover" alt="@Model.BookName" />
+            }
+            else
+            {
+                <div class="book-cover card-img-top">
+                    <i class="bi bi-book"></i>
+                </div>
+            }
+            <div class="card-body text-center">
+                <h5 class="card-title mb-1">@Model.BookName</h5>
+                <p class="text-muted mb-0">@Model.BookAuthor</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card p-4">
+            <dl class="row mb-0">
+                <dt class="col-sm-4 text-muted">Buch-ID</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.BookId)</dd>
+
+                <dt class="col-sm-4 text-muted">Titel</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.BookName)</dd>
+
+                <dt class="col-sm-4 text-muted">Autor</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.BookAuthor)</dd>
+
+                <dt class="col-sm-4 text-muted">Veröffentlicht</dt>
+                <dd class="col-sm-8">@Model.BookDate.ToString("yyyy-MM-dd")</dd>
+
+                <dt class="col-sm-4 text-muted">Datei</dt>
+                <dd class="col-sm-8">
+                    @if (!string.IsNullOrEmpty(Model.BookFile))
+                    {
+                        <a href="@Model.BookFile" target="_blank"><i class="bi bi-file-earmark-arrow-down me-1"></i>Datei öffnen</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-4 text-muted">Titelbild-URL</dt>
+                <dd class="col-sm-8 text-break">@(string.IsNullOrEmpty(Model.BookImage) ? "—" : Model.BookImage)</dd>
+
+                <dt class="col-sm-4 text-muted">Eigentümer (Benutzer)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.UserId)</dd>
+            </dl>
+
+            <div class="d-flex gap-2 mt-3 pt-3 border-top">
+                <a asp-action="Edit" asp-route-bookId="@Model.BookId" class="btn btn-primary">
+                    <i class="bi bi-pencil me-1"></i>Bearbeiten
+                </a>
+                <a asp-action="Delete" asp-route-bookId="@Model.BookId" class="btn btn-outline-danger">
+                    <i class="bi bi-trash me-1"></i>Löschen
+                </a>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>Zurück zur Liste
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

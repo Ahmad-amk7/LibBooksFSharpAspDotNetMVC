@@ -1,0 +1,62 @@
+@model UserAccount.UserAccount
+
+@{
+    ViewData["Title"] = "Mein Konto";
+}
+
+<div class="page-header">
+    <h1><i class="bi bi-person-circle me-2"></i>Mein Konto</h1>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card p-4">
+            <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                <span class="rounded-circle bg-library text-white d-inline-flex align-items-center justify-content-center me-3"
+                      style="width: 56px; height: 56px; font-size: 1.5rem;">
+                    @(string.IsNullOrEmpty(Model.UserName) ? "?" : Model.UserName.Substring(0, 1).ToUpper())
+                </span>
+                <div>
+                    <h4 class="mb-0">@Model.UserName</h4>
+                    <span class="text-muted">@Model.UserEmail</span>
+                </div>
+            </div>
+
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="bi bi-info-circle me-1"></i>@TempData["Message"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Schließen"></button>
+                </div>
+            }
+
+            <dl class="row mb-0">
+                <dt class="col-sm-4 text-muted">Benutzer-ID</dt>
+                <dd class="col-sm-8"><code>@Html.DisplayFor(model => model.UserId)</code></dd>
+
+                <dt class="col-sm-4 text-muted">Name</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.UserName)</dd>
+
+                <dt class="col-sm-4 text-muted">E-Mail</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.UserEmail)</dd>
+
+                <dt class="col-sm-4 text-muted">Passwort</dt>
+                <dd class="col-sm-8">
+                    <span class="text-muted">@(string.IsNullOrEmpty(Model.UserPassword) ? "—" : "••••••••")</span>
+                </dd>
+            </dl>
+
+            <div class="d-flex gap-2 mt-3 pt-3 border-top">
+                <a asp-action="Edit" class="btn btn-primary">
+                    <i class="bi bi-pencil me-1"></i>Kontodaten bearbeiten
+                </a>
+                <a asp-controller="Book" asp-action="MyBooks" class="btn btn-outline-secondary">
+                    <i class="bi bi-journal-bookmark me-1"></i>Meine Bücher
+                </a>
+                <a asp-action="Delete" class="btn btn-outline-danger">
+                    <i class="bi bi-trash me-1"></i>Konto löschen
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+@model UserAccount.UserAccount
+
+@{
+    ViewData["Title"] = "Kontodaten bearbeiten";
+}
+
+<div class="page-header">
+    <h1><i class="bi bi-pencil me-2"></i>Kontodaten bearbeiten</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Benutzer-ID</label>
+                        <input asp-for="UserId" class="form-control" readonly />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="UserName" class="form-label">Vollständiger Name</label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="UserEmail" class="form-label">E-Mail</label>
+                        <input asp-for="UserEmail" class="form-control" type="email" />
+                        <span asp-validation-for="UserEmail" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="UserPassword" class="form-label">Passwort</label>
+                        <input asp-for="UserPassword" class="form-control" type="password" />
+                        <span asp-validation-for="UserPassword" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-accent">
+                        <i class="bi bi-check-circle me-1"></i>Speichern
+                    </button>
+                    <a asp-action="Profile" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Zurück zu meinem Konto
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-5 mt-3 mt-lg-0">
+        <div class="card p-4 bg-light">
+            <h6><i class="bi bi-info-circle me-2 text-primary"></i>Bearbeiten</h6>
+            <p class="small text-muted mb-0">
+                Die Benutzer-ID ist der Primärschlüssel und kann nicht geändert werden.
+                Alle Ihre Bücher verweisen weiterhin auf diese ID.
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
